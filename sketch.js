@@ -1,86 +1,104 @@
+/*
+My 8 variables per letter are:
+'anchorOneX' : the X value of the first anchor point
+'anchorOneY' : the Y value of the first anchor point
+'anchorTwoX' : the X value of the second anchor point
+'anchorOneY' : the Y value of the first anchor point
+'controlOneX' : the X value of the first control point
+'controlOneY' : the Y value of the first control point
+'controlTwoX' : the X value of the second control point
+'controlTwoY' : the Y value of the second control point
+*/
+
+// Declare canvas dimensions
 const canvasWidth = 960;
 const canvasHeight = 500;
 
-/*
- * my three variable per letter are:
- *
-   size: radius of the second circle (in pixels)
-   offsetx: x offset (in pixels) of the second circle
-            relative to the first one
-   offsety: y offset (in pixels) of the second circle
-            relative to the first one
- *
- */
-
+// Declare letter objects
 const letterA = {
-  "size": 80,
-  "offsetx": 0,
-  "offsety": 35
+  'anchorOneX' : 25,
+  'anchorOneY' : 50,
+  'anchorTwoX' : 100,
+  'anchorTwoY' : 100,
+  'controlOneX' : -250,
+  'controlOneY' : 100,
+  'controlTwoX' : 50,
+  'controlTwoY' : -325
 }
 
 const letterB = {
-  "size": 150,
-  "offsetx": 0,
-  "offsety": -145
+  'anchorOneX' : -100,
+  'anchorOneY' : -100,
+  'anchorTwoX' : 0,
+  'anchorTwoY' : 0,
+  'controlOneX' : -50,
+  'controlOneY' : 300,
+  'controlTwoX' : 225,
+  'controlTwoY' : -75
 }
 
 const letterC = {
-  "size": 100,
-  "offsetx": 30,
-  "offsety": 0
+  'anchorOneX' : 80,
+  'anchorOneY' : -50,
+  'anchorTwoX' : 80,
+  'anchorTwoY' : 50,
+  'controlOneX' : -125,
+  'controlOneY' : -225,
+  'controlTwoX' : -125,
+  'controlTwoY' : 225
 }
 
-const backgroundColor  = "#acf2e7";
-
-const darkGreen  = "#26b29d";
-const lightGreen  = "#30dfc4";
-const strokeColor  = "#0a2d27";
-
-function setup () {
-  // create the drawing canvas, save the canvas element
+// SETUP FUNCTION
+function setup() {
+  // Create the canvas and save the canvas element
   main_canvas = createCanvas(canvasWidth, canvasHeight);
   main_canvas.parent('canvasContainer');
 
-  // color/stroke setup
-  stroke(strokeColor);
-  strokeWeight(4);
+  // Set styles
+  angleMode(DEGREES);
+  background(0);
+  noStroke();
 
-  // with no animation, redrawing the screen is not necessary
+  // Disable loop
   noLoop();
 }
 
-function draw () {
-  // clear screen
-  background(backgroundColor);
+// DRAW FUNCTION
+function draw() {
+  // Set center of canvas
+  translate(canvasWidth / 2, canvasHeight / 2);
 
-  // compute the center of the canvas
-  let center_x = canvasWidth / 2;
-  let center_y = canvasHeight / 1.6;
+  // push();
+  // fill(255, 0, 0);
+  // rectMode(CENTER);
+  // rect(0, 0, 200, 200);
+  // pop();
 
-  // draw the letters A, B, C from saved data
-  drawLetter(center_x - 250, center_y, letterA);
-  drawLetter(center_x      , center_y, letterB);
-  drawLetter(center_x + 250, center_y, letterC);
+  // Draw letters
+  letter(-250, 0, letterA);
+  letter(0, 0, letterB);
+  letter(250, 0, letterC);
 }
 
-function drawLetter(posx, posy, letterData) {
-  // determine parameters for second circle
-  let size2 = letterData["size"];
-  let pos2x = posx + letterData["offsetx"];
-  let pos2y = posy + letterData["offsety"];
-
-  // draw two circles
-  fill(darkGreen);
-  ellipse(posx, posy, 150, 150);
-  fill(lightGreen);
-  ellipse(pos2x, pos2y, size2, size2);
+// LETTER FUNCTION
+function letter(x, y, data) {
+  push();
+  stroke(255);
+  strokeWeight(10);
+  noFill();
+  bezier(x + data['anchorOneX'], y + data['anchorOneY'],
+         x + data['controlOneX'], y + data['controlOneY'],
+         x + data['controlTwoX'], y + data['controlTwoY'],
+         x + data['anchorTwoX'], y + data['anchorTwoY']
+  );
+  pop();
 }
 
+// KEY TYPED FUNCTION
 function keyTyped() {
   if (key == '!') {
     saveBlocksImages();
-  }
-  else if (key == '@') {
+  } else if (key == '@') {
     saveBlocksImages(true);
   }
 }
