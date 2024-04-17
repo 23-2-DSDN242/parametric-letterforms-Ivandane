@@ -68,12 +68,6 @@ function draw() {
   // Set center of canvas
   translate(canvasWidth / 2, canvasHeight / 2);
 
-  // push();
-  // fill(255, 0, 0);
-  // rectMode(CENTER);
-  // rect(0, 0, 200, 200);
-  // pop();
-
   // Draw letters
   letter(-250, 0, letterA);
   letter(0, 0, letterB);

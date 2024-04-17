@@ -1,37 +1,86 @@
-/* these are optional special variables which will change the system */
-var systemBackgroundColor = "#acf2e7";
-var systemLineColor = "#000090";
-var systemBoxColor = "#C73869";
+// Declare system colors
+var systemBackgroundColor = 170; // Black
+var systemLineColor = 255; // White
+var systemBoxColor = [255, 0, 0]; // Red
 
-/* internal constants */
-const darkGreen  = "#26b29d";
-const lightGreen  = "#30dfc4";
-const strokeColor  = "#0a2d27";
-
-/*
- * Draw the letter given the letterData
- *
- * Letters should always be drawn with the
- * following bounding box guideline:
- * from (0,0) to (100, 200)
- */
+// DRAW LETTER FUNCTION
 function drawLetter(letterData) {
-  // color/stroke setup
-  stroke(strokeColor);
-  strokeWeight(4);
+  // Set styles
+  angleMode(DEGREES);
+  stroke(0);
+  fill(255);
 
-  // determine parameters for second circle
-  let size2 = letterData["size"];
-  let pos2x = 50  + letterData["offsetx"];
-  let pos2y = 150 + letterData["offsety"];
+  drawPaper(
+    letterData["x1"],
+    letterData["y1"],
+    letterData["w1"],
+    letterData["h1"],
+    letterData["f1"]
+  );
 
-  // draw two circles
-  fill(darkGreen);
-  ellipse(50, 150, 75, 75);
-  fill(lightGreen);
-  ellipse(pos2x, pos2y, size2, size2);
+  drawPaper(
+    letterData["x2"],
+    letterData["y2"],
+    letterData["w2"],
+    letterData["h2"],
+    letterData["f2"]
+  );
+
+  drawPaper(
+    letterData["x3"],
+    letterData["y3"],
+    letterData["w3"],
+    letterData["h3"],
+    letterData["f3"]
+  );
+
+  drawPaper(
+    letterData["x4"],
+    letterData["y4"],
+    letterData["w4"],
+    letterData["h4"],
+    letterData["f4"]
+  );
 }
 
+// DRAW PAPER FUNCTION
+function drawPaper(x, y, w, h, fold) {
+  // Declare variables
+  let x1 = x;
+  let y1 = y;
+  let x2 = x + w;
+  let y2 = y;
+  let x3 = x + w;
+  let y3 = y + h;
+  let x4 = x;
+  let y4 = y + h;
+
+  // Adjust vertices according to positive and negative values
+  if (fold === 1) {
+    if (abs(w) > abs(h)) {
+      if (w > 0) {
+        x2 -= 20;
+      }
+      else if (w < 0) {
+        x2 += 20;
+      }
+    }
+
+    else if (abs(h) > abs(w)) {
+      if (h > 0) {
+        y3 -= 20;
+      }
+      else if (h < 0) {
+        y3 += 20;
+      }
+    }
+  }
+  
+  // Draw quad
+  quad(x1, y1, x2, y2, x3, y3, x4, y4);
+}
+
+// INTERPOLATE LETTER FUNCTION
 function interpolate_letter(percent, oldObj, newObj) {
   let new_letter = {};
   new_letter["size"]    = map(percent, 0, 100, oldObj["size"], newObj["size"]);
@@ -40,8 +89,9 @@ function interpolate_letter(percent, oldObj, newObj) {
   return new_letter;
 }
 
-var swapWords = [
-  "ABBAABBA",
-  "CAB?CAB?",
-  "BAAAAAAA"
-]
+// Declare swap words array
+let swapWords = [
+  "ABCBCBCB",
+  "ABCBCBCB",
+  "ABCBCBCB"
+];
