@@ -1,3 +1,5 @@
+Link to GitHub Page: https://23-2-dsdn242.github.io/parametric-letterforms-Ivandane/alphabet.html
+
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-24ddc0f5d75046c5622901739e7c5dd533143b0c8e959d652212380cedb1ea36.svg)](https://classroom.github.com/a/xQz3oEP8)
 ## MDDN 242 2024 Assignment 2
 

@@ -7,15 +7,20 @@ var systemBoxColor = [255, 0, 0]; // Red
 function drawLetter(letterData) {
   // Set styles
   angleMode(DEGREES);
+  colorMode(HSB, 100);
   stroke(0);
-  fill(255);
+  strokeJoin(ROUND);
+  fill(0, 0, 100);
+
+  let paperFoldB = 80;
 
   drawPaper(
     letterData["x1"],
     letterData["y1"],
     letterData["w1"],
     letterData["h1"],
-    letterData["f1"]
+    letterData["f1"],
+    paperFoldB
   );
 
   drawPaper(
@@ -23,7 +28,8 @@ function drawLetter(letterData) {
     letterData["y2"],
     letterData["w2"],
     letterData["h2"],
-    letterData["f2"]
+    letterData["f2"],
+    paperFoldB
   );
 
   drawPaper(
@@ -31,7 +37,8 @@ function drawLetter(letterData) {
     letterData["y3"],
     letterData["w3"],
     letterData["h3"],
-    letterData["f3"]
+    letterData["f3"],
+    paperFoldB
   );
 
   drawPaper(
@@ -39,12 +46,13 @@ function drawLetter(letterData) {
     letterData["y4"],
     letterData["w4"],
     letterData["h4"],
-    letterData["f4"]
+    letterData["f4"],
+    paperFoldB
   );
 }
 
 // DRAW PAPER FUNCTION
-function drawPaper(x, y, w, h, fold) {
+function drawPaper(x, y, w, h, fold, foldB) {
   // Declare variables
   let x1 = x;
   let y1 = y;
@@ -56,22 +64,80 @@ function drawPaper(x, y, w, h, fold) {
   let y4 = y + h;
 
   // Adjust vertices according to positive and negative values
-  if (fold === 1) {
+  if (fold < 0 || fold > 0) {
     if (abs(w) > abs(h)) {
       if (w > 0) {
         x2 -= 20;
+
+        // Draw fold
+        if (h > 0 && fold > 1) {
+          push();
+          fill(0, 0, foldB);
+          rect(x2, y3, 20, fold);
+          pop();
+        }
+        else if (h < 0 && fold > 1) {
+          push();
+          fill(0, 0, foldB);
+          rect(x2, y3, 20, -fold);
+          pop();
+        }
       }
+
       else if (w < 0) {
         x2 += 20;
+
+        // Draw fold
+        if (h > 0 && fold > 1) {
+          push();
+          fill(0, 0, foldB);
+          rect(x3, y3, 20, fold);
+          pop();
+        }
+        else if (h < 0 && fold > 1) {
+          push();
+          fill(0, 0, foldB);
+          rect(x3, y3, 20, -fold);
+          pop();
+        }
       }
     }
 
     else if (abs(h) > abs(w)) {
       if (h > 0) {
         y3 -= 20;
+
+        // Draw fold
+        if (w > 0 && fold > 1) {
+          push();
+          fill(0, 0, foldB);
+          rect(x4, y3, -fold, 20);
+          pop();
+        }
+        else if (w < 0 && fold > 1) {
+          push();
+          fill(0, 0, foldB);
+          rect(x4, y3, fold, 20);
+          pop();
+        }
       }
+
       else if (h < 0) {
         y3 += 20;
+
+        // Draw fold
+        if (w > 0 && fold > 1) {
+          push();
+          fill(0, 0, foldB);
+          rect(x4, y4, -fold, 20);
+          pop();
+        }
+        else if (w < 0 && fold > 1) {
+          push();
+          fill(0, 0, foldB);
+          rect(x4, y4, fold, 20);
+          pop();
+        }
       }
     }
   }
