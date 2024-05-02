@@ -6,29 +6,28 @@
  */
 const sliderInfo = [
   ["x1", 0, 100],
-  ["x2", 0, 100],
-  ["x3", 0, 100],
-  ["x4", 0, 100],
-
   ["y1", 0, 200],
-  ["y2", 0, 200],
-  ["y3", 0, 200],
-  ["y4", 0, 200],
-
   ["w1", -200, 200],
-  ["w2", -200, 200],
-  ["w3", -200, 200],
-  ["w4", -200, 200],
-
   ["h1", -200, 200],
-  ["h2", -200, 200],
-  ["h3", -200, 200],
-  ["h4", -200, 200],
-
   ["f1", 0, 200],
+
+  ["x2", 0, 100],
+  ["y2", 0, 200],
+  ["w2", -200, 200],
+  ["h2", -200, 200],
   ["f2", 0, 200],
+
+  ["x3", 0, 100],
+  ["y3", 0, 200],
+  ["w3", -200, 200],
+  ["h3", -200, 200],
   ["f3", 0, 200],
-  ["f4", 0, 200]
+
+  ["x4", 0, 100],
+  ["y4", 0, 200],
+  ["w4", -200, 200],
+  ["h4", -200, 200],
+  ["f4", 0, 200],
 ];
 
 // PROBABLY DON'T NEED TO EDIT ANYTHING ELSE. STOP HERE.
@@ -74,7 +73,41 @@ function setup () {
   for(let i=0; i<numSliders; i++) {
     let cur_row = select("#row" + (i+1))
     cur_row.show();
-    let cur_slider = createSlider(0, 100, 50)
+
+    // Set default slider values
+    let min, max, defaultValue;
+    if (i === 0 || i === 10) {
+      defaultValue = 30;
+      min = 0;
+      max = 100;
+    }
+    else if (i === 5 || i === 15) {
+      defaultValue = 50;
+      min = 0;
+      max = 0;
+    }
+    else if (i === 1 || i === 6) {
+      defaultValue = 130;
+      min = 0;
+      max = 200;
+    }
+    else if (i === 11 || i === 16) {
+      defaultValue = 150;
+      min = 0;
+      max = 200;
+    }
+    else if (i === 2 || i === 3 || i === 7 || i === 8 || i === 12 || i === 13 || i === 17 || i === 18) {
+      defaultValue = 20;
+      min = -200;
+      max = 200;
+    }
+    else if (i === 4 || i === 9 || i === 14 || i === 19) {
+      defaultValue = 0;
+      min = 0;
+      max = 200;
+    }
+
+    let cur_slider = createSlider(0, 100, map(defaultValue, min, max, 0, 100));
     let containerString = "slider" + (i+1) + "Container"
     cur_slider.parent(containerString);
     param_sliders.push(cur_slider);
@@ -92,8 +125,22 @@ function buttonPressedEvent() {
 }
 
 function draw () {
-  // clear screen
-  background(systemBackgroundColor);
+  background(255);
+  for (let y = 0; y < height; y++) {
+    let amount = map(y, 0, height, 0, 1);
+    let c;
+    if (y < height / 2) {
+      c = lerpColor(color("#BA8C63"), color("#EBC39D"), amount);
+    }
+    else {
+      c = lerpColor(color("#EBC39D"), color("#BA8C63"), amount);
+    }
+    push();
+    strokeWeight(2);
+    stroke(c);
+    line(0, y, width, y);
+    pop();
+  }
 
   // compute the center of the canvas
   let center_x = canvasWidth / 2;
