@@ -96,8 +96,22 @@ function computeCurrentSoloChar() {
 
 let hot_key_press = false;
 function draw () {
-  // clear screen
-  background(systemBackgroundColor);
+  background(255);
+  for (let y = 0; y < height; y++) {
+    let amount = map(y, 0, height, 0, 1);
+    let c;
+    if (y < height / 2) {
+      c = lerpColor(color("#BA8C63"), color("#EBC39D"), amount);
+    }
+    else {
+      c = lerpColor(color("#EBC39D"), color("#BA8C63"), amount);
+    }
+    push();
+    strokeWeight(2);
+    stroke(c);
+    line(0, y, width, y);
+    pop();
+  }
 
   // draw the interpolation on the guidelines
   push();
@@ -128,10 +142,12 @@ function draw () {
     let curLetterObj = getCharacterInterpolation(percent, soloLastLetter, soloCurLetter);
     // print(curLetterObj, soloLastLetter, soloCurLetter);
     if (debugBox) {
-      noFill()
+      push();
+      noFill();
       strokeWeight(4);
       stroke(systemBoxColor);
       rect(0, 0, 100, 200);
+      pop();
     }
 
     if (interpolation_is_on || (i==0 || i==numSteps-1)) {

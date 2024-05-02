@@ -39,8 +39,22 @@ function mouseClicked() {
 }
 
 function draw () {
-  // clear screen
-  background(systemBackgroundColor);
+  background(255);
+  for (let y = 0; y < height; y++) {
+    let amount = map(y, 0, height, 0, 1);
+    let c;
+    if (y < height / 2) {
+      c = lerpColor(color("#BA8C63"), color("#EBC39D"), amount);
+    }
+    else {
+      c = lerpColor(color("#EBC39D"), color("#BA8C63"), amount);
+    }
+    push();
+    strokeWeight(2);
+    stroke(c);
+    line(0, y, width, y);
+    pop();
+  }
 
   // compute the center of the canvas
   let center_x = canvasWidth / 2;  
@@ -77,10 +91,12 @@ function draw () {
     for (let i=left_margin+first_letter_offset_x; i<right_margin-x_step+1; i+=x_step) {
       if (cur_letter_index < letters.length) {
         if (debugBox) {
-          noFill()
+          push();
+          noFill();
           strokeWeight(4);
           stroke(systemBoxColor);
           rect(0, 0, 100, 200);
+          pop();
         }
 
         let letter = letters[cur_letter_index];

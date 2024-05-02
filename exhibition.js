@@ -159,11 +159,11 @@ function computeCurrentSoloChar() {
 }
 
 // draws a single character given an object, position, and scale
-function drawFromDataObject(x, y, s, obj) {
+function drawFromDataObject(x, y, s, obj, i) {
   push();
   translate(x, y);
   scale(s, s);
-  drawLetter(obj);
+  drawLetter(obj, i);
   pop();
 }
 
@@ -212,7 +212,22 @@ function draw () {
     }
   }
 
-  background(systemBackgroundColor);
+  background(255);
+  for (let y = 0; y < height; y++) {
+    let amount = map(y, 0, height, 0, 1);
+    let c;
+    if (y < height / 2) {
+      c = lerpColor(color("#BA8C63"), color("#EBC39D"), amount);
+    }
+    else {
+      c = lerpColor(color("#EBC39D"), color("#BA8C63"), amount);
+    }
+    push();
+    strokeWeight(2);
+    stroke(c);
+    line(0, y, width, y);
+    pop();
+  }
 
   // shorthand variables to allow margin
   var o = 20
@@ -228,7 +243,7 @@ function draw () {
       chosenCurAnimationFrame[i] = chosenCurAnimationFrame[i] + 1;
     }
     var obj = computeCurrentChosenChar(i);
-    drawFromDataObject(o + i*w2/8.0, o + h2/2.0 - 120, 1.0, obj)
+    drawFromDataObject(o + i*w2/8.0, o + h2/2.0 - 120, 1.0, obj, i)
   }
 }
 
