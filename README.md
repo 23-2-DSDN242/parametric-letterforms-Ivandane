@@ -13,7 +13,7 @@ To begin, we were tasked with drawing the letters "A", "B", and "C" in any style
 - controlTwoX: the X value of the second control point
 - controlTwoY: the Y value of the second control point
 
-![Sketch](images/sketch.jpg)
+![Sketch](images/sketch.png)
 ### Part 2: Design the Alphabet
 This process was the most time-consuming, as now we had to redesign the letters A-Z, numbers 1-9, and a default character within the code framework. I had to change my idea from using bezier curves as I realised it would require more than 20 parameters to create the complicated characters using this approach.
 
@@ -29,7 +29,7 @@ After all the values were set, I added colour and shading to the characters for 
 
 One character that was limited by the number of parameters was the number 8, as it would require five sections of paper to create rounded corners on all sides. My current system only uses four sections of paper, and adding more would require more than 20 parameters, so I had to leave the unevenness of the corners as is to not be forced to recode my framework from the ground up.
 
-![Alphabet](images/alphabet.jpg)
+![Alphabet](images/alphabet.png)
 ### Part 3: Interpolation
 Using the provided *interpolate_letter* function, we were now required to create visual transitions between letters when they are typed in exhibition mode. Using simple numbers as parameters for our letterforms made the calculations much easier through the use of the *map* function. The *percent* variable increments from 0 to 100 whenever a letter is typed, and this drives the animation of the interpolation. Using multiple *if* statements and a lot of math, I was able to construct five stages of animation each character goes through:
 
@@ -39,7 +39,7 @@ Using the provided *interpolate_letter* function, we were now required to create
 - 60% - 80%: the papers adjust to the new letterform parameters, apart from the folded sections which stay at 0
 - 80% - 100%: the folded sections extend
 
-![Interpolation](images/interaction.jpg)
+![Interpolation](images/interaction.png)
 ### Part 4: Exhibition
 The final part of this project was to refine our designs for exhibition mode, which allows for live typing of our typeface. I wanted each paper to have its own colour, so I included an array and made slight adjustments to the *exhibition.js* file to make this work.
 
